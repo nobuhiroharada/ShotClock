@@ -1,0 +1,20 @@
+/* 
+  Localizable.strings
+  ShotClock
+
+  Created by Nobuhiro Harada on 2019/10/08.
+  Copyright © 2019 Nobuhiro Harada. All rights reserved.
+*/
+
+// 設定 - アクションシート
+"setting_title" = "設定";
+"setting_subtitle" = "自動ブザー設定、リセットを行います。";
+"setting_auto_buzzer" = "終了時に自動でブザーを鳴らす";
+"setting_reset" = "リセット";
+"setting_cancel" = "キャンセル";
+
+// ショットクロック オーバー
+"shotclock_over" = "ショットクロックオーバー";
+
+// ショットクロック 編集
+"shotclock_title" = "ショットクロック 編集";
