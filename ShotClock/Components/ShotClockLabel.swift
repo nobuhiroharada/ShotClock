@@ -8,14 +8,14 @@
 
 import UIKit
 
-class ShotClockLabel: UILabel {
+final class ShotClockLabel: UILabel {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.text = "24"
         self.textAlignment = .center
-        self.textColor = .yellow
+        self.textColor = getTextColor()
         self.isUserInteractionEnabled = true
 
         switch UIDevice.current.userInterfaceIdiom {
@@ -24,7 +24,7 @@ class ShotClockLabel: UILabel {
         case .pad:
             checkOrientation4Pad()
         default:
-            initPhoneAttr()
+            break
         }
         
     }
@@ -57,4 +57,31 @@ class ShotClockLabel: UILabel {
         self.bounds = CGRect(x: 0, y: 0, width: 900, height: 720)
         self.font = UIFont(name: "DigitalDismay", size: 750)
     }
+    
+    func getTextColor() -> UIColor {
+        let currentColor: ShotClockTextColor = userdefaults.getShotClockColor(forKey: SHOT_CLOCK_CHAR_CLOLR) ?? ShotClockTextColor.yellow
+        
+        switch currentColor {
+        case .red:
+            return UIColor.red
+        case .green:
+            return UIColor.green
+        case .yellow:
+            return UIColor.yellow
+        }
+    }
+    
+    func getTextColorString() -> String {
+        let currentColor: ShotClockTextColor = userdefaults.getShotClockColor(forKey: SHOT_CLOCK_CHAR_CLOLR) ?? ShotClockTextColor.yellow
+        
+        switch currentColor {
+        case .red:
+            return "setting_red".localized
+        case .green:
+            return "setting_green".localized
+        case .yellow:
+            return "setting_yellow".localized
+        }
+    }
+    
 }

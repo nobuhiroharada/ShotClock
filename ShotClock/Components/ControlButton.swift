@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ControlButton: UIButton {
+final class ControlButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,7 +21,7 @@ class ControlButton: UIButton {
         case .pad:
             initPadAttr()
         default:
-            initPhoneAttr()
+            break
         }
     }
     

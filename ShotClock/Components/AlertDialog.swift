@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class AlertDialog: UIAlertController {
+final class AlertDialog: UIAlertController {
     
     class func showTimeover(title: String, viewController: UIViewController, callback: @escaping () -> Void) {
         
@@ -48,50 +48,79 @@ class AlertDialog: UIAlertController {
         viewController.present(alert, animated: true, completion: nil)
     }
     
-    static func selectAlertController(action: UIAlertAction) -> UIAlertAction {
+    class func showColorSettingActionSheet( _ shotClockView: ShotClockView, _ tableView: UITableView, _ indexPosition: IndexPath, viewController: UIViewController) {
         
-        action.setValue(UIImage(named: "checkmark.png")?.scaleImage(scaleSize: 0.4), forKey: "image")
+        let colorState: ShotClockTextColor = userdefaults.getShotClockColor(forKey: SHOT_CLOCK_CHAR_CLOLR) ?? ShotClockTextColor.yellow
         
-        return action
-    }
-    
-    class func showSettingActionSheet(_ shotClockView: ShotClockView, viewController: UIViewController) {
+        let currentColor = shotClockView.shotClockLabel.getTextColor()
         
-        let actionSheet: UIAlertController = UIAlertController(title: "setting_title".localized,  message: "setting_subtitle".localized, preferredStyle:  UIAlertController.Style.actionSheet)
+        let actionSheet: UIAlertController = UIAlertController(title: "setting_color_title".localized,  message: "setting_color_subtitle".localized, preferredStyle:  UIAlertController.Style.actionSheet)
         
-        var autoBuzzerAction = UIAlertAction(title: "setting_auto_buzzer".localized, style: UIAlertAction.Style.default, handler:{
+        var redSelectedAction = UIAlertAction(title: "setting_red".localized, style: UIAlertAction.Style.default, handler:{
             (action: UIAlertAction!) -> Void in
             
-            if userdefaults.bool(forKey: BUZEER_AUTO_BEEP) {
-                userdefaults.set(false, forKey: BUZEER_AUTO_BEEP)
-            } else {
-                userdefaults.set(true, forKey: BUZEER_AUTO_BEEP)
-            }
-            
+            shotClockView.shotClockLabel.textColor = .red
+            userdefaults.setShotClockColor(.red, forKey: SHOT_CLOCK_CHAR_CLOLR)
+            tableView.reloadRows(at: [indexPosition], with: .none)
         })
         
-        let initAction = UIAlertAction(title: "setting_reset".localized, style: UIAlertAction.Style.default, handler:{
+        var greenSelectedAction = UIAlertAction(title: "setting_green".localized, style: UIAlertAction.Style.default, handler:{
             (action: UIAlertAction!) -> Void in
             
-            shotClockView.reset()
-
+            shotClockView.shotClockLabel.textColor = .green
+            userdefaults.setShotClockColor(.green, forKey: SHOT_CLOCK_CHAR_CLOLR)
+            tableView.reloadRows(at: [indexPosition], with: .none)
+        })
+        
+        var yellowSelectedAction = UIAlertAction(title: "setting_yellow".localized, style: UIAlertAction.Style.default, handler:{
+            (action: UIAlertAction!) -> Void in
+            
+            shotClockView.shotClockLabel.textColor = .yellow
+            userdefaults.setShotClockColor(.yellow, forKey: SHOT_CLOCK_CHAR_CLOLR)
+            tableView.reloadRows(at: [indexPosition], with: .none)
         })
         
         let cancelAction = UIAlertAction(title: "setting_cancel".localized, style: UIAlertAction.Style.cancel, handler: nil)
         
-        if userdefaults.bool(forKey: BUZEER_AUTO_BEEP) {
-            autoBuzzerAction = selectAlertController(action: autoBuzzerAction)
+        switch colorState {
+        case .red:
+            redSelectedAction = setSelectShotClockColor(action: redSelectedAction, color: currentColor)
+        case .green:
+            greenSelectedAction = setSelectShotClockColor(action: greenSelectedAction, color: currentColor)
+        case .yellow:
+            yellowSelectedAction = setSelectShotClockColor(action: yellowSelectedAction, color: currentColor)
         }
         
-        actionSheet.addAction(autoBuzzerAction)
-        actionSheet.addAction(initAction)
+        actionSheet.addAction(redSelectedAction)
+        actionSheet.addAction(greenSelectedAction)
+        actionSheet.addAction(yellowSelectedAction)
         actionSheet.addAction(cancelAction)
         
         actionSheet.popoverPresentationController?.sourceView = viewController.view
         
         let screenSize = UIScreen.main.bounds
-        actionSheet.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width/2, y: screenSize.size.height, width: 0, height: 0)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            if isLandscape {
+                actionSheet.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width/2-240, y: screenSize.size.height, width: 0, height: 0)
+            } else {
+                actionSheet.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width/2-68, y: screenSize.size.height, width: 0, height: 0)
+            }
+        }
+        else if UIDevice.current.userInterfaceIdiom == .phone {
+            actionSheet.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width/2, y: screenSize.size.height, width: 0, height: 0)
+        }
+        
         
         viewController.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    static func setSelectShotClockColor(action: UIAlertAction, color: UIColor) -> UIAlertAction {
+            
+        action.setValue(UIImage(named: "checkmark.png")?.scaleImage(scaleSize: 0.4), forKey: "image")
+        action.setValue(color, forKey: "imageTintColor")
+        action.setValue(color, forKey: "titleTextColor")
+        
+        return action
     }
 }

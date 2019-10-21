@@ -7,7 +7,7 @@
 //
 import UIKit
 
-class ShotClockView: UIView {
+final class ShotClockView: UIView {
     
     var shotClockTimer: Timer!
     var shotSeconds: Int = 24
@@ -26,6 +26,8 @@ class ShotClockView: UIView {
     
     var buzzerButton: BuzzerButton
     
+    var settingButton: SettingButton
+    
     override init(frame: CGRect) {
         shotClockLabel = ShotClockLabel()
         
@@ -42,6 +44,8 @@ class ShotClockView: UIView {
         
         buzzerButton = BuzzerButton()
         
+        settingButton = SettingButton()
+        
         super.init(frame: frame)
         
         self.addSubview(shotClockLabel)
@@ -50,6 +54,7 @@ class ShotClockView: UIView {
         self.addSubview(sec24Button)
         self.addSubview(sec14Button)
         self.addSubview(buzzerButton)
+        self.addSubview(settingButton)
         
         checkShotClockStatus()
     }
@@ -76,9 +81,7 @@ class ShotClockView: UIView {
         
         shotClockLabel.center = CGPoint(x: frame.width*(1/2), y: frame.height*(1/2))
         
-        buzzerButton.center = CGPoint(x: frame.width*(1/2), y: frame.height*(1/8))
-        
-        let btnPosY = frame.height*(7/8)
+        let btnPosY = frame.height*(10/12)
         
         controlButton.center = CGPoint(x: frame.width*(1/5), y: btnPosY)
         
@@ -87,7 +90,9 @@ class ShotClockView: UIView {
         sec24Button.center = CGPoint(x: frame.width*(3/5), y: btnPosY)
         sec14Button.center = CGPoint(x: frame.width*(4/5), y: btnPosY)
         
+        buzzerButton.center = CGPoint(x: frame.width*(1/2), y: frame.height*(11/12))
         
+        settingButton.center = CGPoint(x: frame.width*(11/12), y: frame.height*(1/12))
     }
     
     func landscape(frame: CGRect) {
@@ -110,6 +115,8 @@ class ShotClockView: UIView {
         sec14Button.center = CGPoint(x: frame.width*(4/6), y: shotClockButtonY)
         
         buzzerButton.center = CGPoint(x: frame.width*(5/6), y: shotClockButtonY)
+        
+        settingButton.center = CGPoint(x: frame.width*(11/12), y: frame.height*(1/12))
     }
     
     func initPadAttrPortrait() {

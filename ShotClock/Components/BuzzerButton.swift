@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BuzzerButton: UIButton {
+final class BuzzerButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,7 +21,7 @@ class BuzzerButton: UIButton {
         case .pad:
             initPadAttr()
         default:
-            initPhoneAttr()
+            break
         }
     }
     

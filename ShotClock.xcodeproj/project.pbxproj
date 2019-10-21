@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E56A46A823565AA500B127E2 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A46A723565AA500B127E2 /* SettingViewController.swift */; };
+		E56A46AA235A42C200B127E2 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A46A9235A42C200B127E2 /* SettingButton.swift */; };
+		E56A46AE235AC8C000B127E2 /* Userdefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A46AD235AC8C000B127E2 /* Userdefaults+.swift */; };
 		E5BB1CFB234AA5DB00B9F9C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB1CFA234AA5DB00B9F9C1 /* AppDelegate.swift */; };
-		E5BB1CFF234AA5DB00B9F9C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB1CFE234AA5DB00B9F9C1 /* ViewController.swift */; };
+		E5BB1CFF234AA5DB00B9F9C1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB1CFE234AA5DB00B9F9C1 /* MainViewController.swift */; };
 		E5BB1D04234AA5DD00B9F9C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5BB1D03234AA5DD00B9F9C1 /* Assets.xcassets */; };
 		E5BB1D07234AA5DD00B9F9C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5BB1D05234AA5DD00B9F9C1 /* LaunchScreen.storyboard */; };
 		E5BB1D0F234AA97100B9F9C1 /* ShotClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB1D0E234AA97100B9F9C1 /* ShotClockView.swift */; };
@@ -26,9 +29,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E56A46A723565AA500B127E2 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		E56A46A9235A42C200B127E2 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
+		E56A46AD235AC8C000B127E2 /* Userdefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Userdefaults+.swift"; sourceTree = "<group>"; };
 		E5BB1CF7234AA5DB00B9F9C1 /* ShotClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShotClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5BB1CFA234AA5DB00B9F9C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E5BB1CFE234AA5DB00B9F9C1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E5BB1CFE234AA5DB00B9F9C1 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E5BB1D03234AA5DD00B9F9C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5BB1D06234AA5DD00B9F9C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E5BB1D08234AA5DD00B9F9C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -79,7 +85,8 @@
 			isa = PBXGroup;
 			children = (
 				E5BB1CFA234AA5DB00B9F9C1 /* AppDelegate.swift */,
-				E5BB1CFE234AA5DB00B9F9C1 /* ViewController.swift */,
+				E5BB1CFE234AA5DB00B9F9C1 /* MainViewController.swift */,
+				E56A46A723565AA500B127E2 /* SettingViewController.swift */,
 				E5BB1D0E234AA97100B9F9C1 /* ShotClockView.swift */,
 				E5BB1D10234AA9D600B9F9C1 /* Components */,
 				E5BB1D21234AB8CE00B9F9C1 /* Extension */,
@@ -101,6 +108,7 @@
 				E5BB1D15234AAA6900B9F9C1 /* ResetButton.swift */,
 				E5BB1D17234AAA9500B9F9C1 /* ShotClockSmallButton.swift */,
 				E5BB1D19234AAB6500B9F9C1 /* BuzzerButton.swift */,
+				E56A46A9235A42C200B127E2 /* SettingButton.swift */,
 				E5BB1D1F234AB84F00B9F9C1 /* AlertDialog.swift */,
 			);
 			path = Components;
@@ -111,6 +119,7 @@
 			children = (
 				E5BB1D22234AB8DC00B9F9C1 /* UIImage+.swift */,
 				E5BB1D24234AB92E00B9F9C1 /* String+.swift */,
+				E56A46AD235AC8C000B127E2 /* Userdefaults+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -190,16 +199,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5BB1D20234AB84F00B9F9C1 /* AlertDialog.swift in Sources */,
-				E5BB1CFF234AA5DB00B9F9C1 /* ViewController.swift in Sources */,
+				E5BB1CFF234AA5DB00B9F9C1 /* MainViewController.swift in Sources */,
 				E5BB1D16234AAA6900B9F9C1 /* ResetButton.swift in Sources */,
 				E5BB1D12234AAA0700B9F9C1 /* ShotClockLabel.swift in Sources */,
+				E56A46AA235A42C200B127E2 /* SettingButton.swift in Sources */,
 				E5BB1D1A234AAB6500B9F9C1 /* BuzzerButton.swift in Sources */,
 				E5BB1D18234AAA9500B9F9C1 /* ShotClockSmallButton.swift in Sources */,
+				E56A46AE235AC8C000B127E2 /* Userdefaults+.swift in Sources */,
 				E5BB1D14234AAA3B00B9F9C1 /* ControlButton.swift in Sources */,
 				E5BB1D25234AB92E00B9F9C1 /* String+.swift in Sources */,
 				E5BB1D23234AB8DC00B9F9C1 /* UIImage+.swift in Sources */,
 				E5BB1CFB234AA5DB00B9F9C1 /* AppDelegate.swift in Sources */,
 				E5BB1D0F234AA97100B9F9C1 /* ShotClockView.swift in Sources */,
+				E56A46A823565AA500B127E2 /* SettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +366,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nobuhiroharada.shotclock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -372,6 +385,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nobuhiroharada.shotclock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

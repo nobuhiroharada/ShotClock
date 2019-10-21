@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ResetButton: UIButton {
+final class ResetButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,7 +21,7 @@ class ResetButton: UIButton {
         case .pad:
             initPadAttr()
         default:
-            initPhoneAttr()
+            break
         }
     }
     

@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+final class MainViewController: UIViewController {
 
     var shotClockView  = ShotClockView()
     var buzzerPlayer: AVAudioPlayer?
@@ -58,27 +58,25 @@ class ViewController: UIViewController {
     }
 
     func addButtonAction() {
-        shotClockView.sec24Button.addTarget(self, action: #selector(ViewController.sec24Button_tapped), for: .touchUpInside)
+        shotClockView.sec24Button.addTarget(self, action: #selector(MainViewController.sec24Button_tapped), for: .touchUpInside)
         
-        shotClockView.sec14Button.addTarget(self, action: #selector(ViewController.sec14Button_tapped), for: .touchUpInside)
+        shotClockView.sec14Button.addTarget(self, action: #selector(MainViewController.sec14Button_tapped), for: .touchUpInside)
         
-        shotClockView.buzzerButton.addTarget(self, action: #selector(ViewController.buzzerButton_touchDown), for: .touchDown)
+        shotClockView.buzzerButton.addTarget(self, action: #selector(MainViewController.buzzerButton_touchDown), for: .touchDown)
         
-        shotClockView.buzzerButton.addTarget(self, action: #selector(ViewController.buzzerButton_touchUp), for: [.touchUpInside, .touchUpOutside])
+        shotClockView.buzzerButton.addTarget(self, action: #selector(MainViewController.buzzerButton_touchUp), for: [.touchUpInside, .touchUpOutside])
         
-        shotClockView.controlButton.addTarget(self, action: #selector(ViewController.shotClockControlButton_tapped), for: .touchUpInside)
+        shotClockView.controlButton.addTarget(self, action: #selector(MainViewController.shotClockControlButton_tapped), for: .touchUpInside)
         
-        shotClockView.resetButton.addTarget(self, action: #selector(ViewController.shotClockResetButton_tapped), for: .touchUpInside)
+        shotClockView.resetButton.addTarget(self, action: #selector(MainViewController.shotClockResetButton_tapped), for: .touchUpInside)
         
+        shotClockView.settingButton.addTarget(self, action: #selector(MainViewController.settingButton_tapped), for: .touchUpInside)
     }
     
     func registerGesturerecognizer() {
-        let shotClock_tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.shotClockLabel_tapped))
+        let shotClock_tap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.shotClockLabel_tapped))
         shotClockView.shotClockLabel.addGestureRecognizer(shotClock_tap)
         
-        let upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.up_swipe))
-        upSwipe.direction = .up
-        self.view.addGestureRecognizer(upSwipe)
     }
     
     @objc func sec24Button_tapped(_ sender: UIButton) {
@@ -169,6 +167,7 @@ class ViewController: UIViewController {
             shotClockView.resetButton.isEnabled = false
         }
     }
+    
     @objc func buzzerButton_touchDown(_ sender: UIButton) {
         buzzerPlayer?.play()
         shotClockView.buzzerButton.setImage(UIImage(named: "buzzer-down"), for: .normal)
@@ -188,6 +187,12 @@ class ViewController: UIViewController {
         AlertDialog.showShotClockEdit(title: "shotclock_title".localized, shotClockView: shotClockView, viewController: self)
     }
     
+    @objc func settingButton_tapped() {
+        let settingViewController = SettingViewController()
+        settingViewController.shotClockView = self.shotClockView
+        self.present(settingViewController, animated: true, completion: nil)
+    }
+    
     func openShotClockTimeOverDialog() {
         AlertDialog.showTimeover(title: "shotclock_over".localized, viewController: self) {
             self.shotClockView.controlButton.setImage(UIImage(named: "start.png"), for: .normal)
@@ -203,12 +208,9 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc func up_swipe() {
-        AlertDialog.showSettingActionSheet(shotClockView,viewController: self)
-    }
 }
 
-extension ViewController: AVAudioPlayerDelegate {
+extension MainViewController: AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         

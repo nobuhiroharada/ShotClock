@@ -6,15 +6,25 @@
   Copyright © 2019 Nobuhiro Harada. All rights reserved.
 */
 
-// 設定 - アクションシート
-"setting_title" = "Setting";
-"setting_subtitle" = "auto buzzer, reset setting";
-"setting_auto_buzzer" = "When time up, auto buzzer";
+// 設定画面
+"setting_view_title" = "Setting";
+
+// ショットクロックの色設定
+"setting_color_title" = "ShotClock color setting";
+"setting_color_subtitle" = "You can change ShotClock text color";
+"setting_auto_buzzer" = "Auto buzzer";
 "setting_reset" = "Reset";
 "setting_cancel" = "Cancel";
+"setting_red" = "Red";
+"setting_green" = "Green";
+"setting_yellow" = "Yellow";
+"setting_color" =  "ShotClock color set";
 
 // ショットクロック オーバー
 "shotclock_over" = "Shot Clock Over";
 
 // ショットクロック 編集
 "shotclock_title" = "Edit Shot Clock Timer";
+
+// アプリバージョン
+"app_version" = "Version";
