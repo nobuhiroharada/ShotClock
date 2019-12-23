@@ -10,6 +10,8 @@
 		E56A46A823565AA500B127E2 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A46A723565AA500B127E2 /* SettingViewController.swift */; };
 		E56A46AA235A42C200B127E2 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A46A9235A42C200B127E2 /* SettingButton.swift */; };
 		E56A46AE235AC8C000B127E2 /* Userdefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A46AD235AC8C000B127E2 /* Userdefaults+.swift */; };
+		E59E0CA423A6FA5400B09205 /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59E0CA323A6FA5400B09205 /* ColorCollectionViewCell.swift */; };
+		E59E0CA623A97D7F00B09205 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59E0CA523A97D7F00B09205 /* UIColor+.swift */; };
 		E5BB1CFB234AA5DB00B9F9C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB1CFA234AA5DB00B9F9C1 /* AppDelegate.swift */; };
 		E5BB1CFF234AA5DB00B9F9C1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BB1CFE234AA5DB00B9F9C1 /* MainViewController.swift */; };
 		E5BB1D04234AA5DD00B9F9C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5BB1D03234AA5DD00B9F9C1 /* Assets.xcassets */; };
@@ -32,6 +34,8 @@
 		E56A46A723565AA500B127E2 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		E56A46A9235A42C200B127E2 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		E56A46AD235AC8C000B127E2 /* Userdefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Userdefaults+.swift"; sourceTree = "<group>"; };
+		E59E0CA323A6FA5400B09205 /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
+		E59E0CA523A97D7F00B09205 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		E5BB1CF7234AA5DB00B9F9C1 /* ShotClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShotClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5BB1CFA234AA5DB00B9F9C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5BB1CFE234AA5DB00B9F9C1 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 				E5BB1D19234AAB6500B9F9C1 /* BuzzerButton.swift */,
 				E56A46A9235A42C200B127E2 /* SettingButton.swift */,
 				E5BB1D1F234AB84F00B9F9C1 /* AlertDialog.swift */,
+				E59E0CA323A6FA5400B09205 /* ColorCollectionViewCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 				E5BB1D22234AB8DC00B9F9C1 /* UIImage+.swift */,
 				E5BB1D24234AB92E00B9F9C1 /* String+.swift */,
 				E56A46AD235AC8C000B127E2 /* Userdefaults+.swift */,
+				E59E0CA523A97D7F00B09205 /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -198,6 +204,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59E0CA423A6FA5400B09205 /* ColorCollectionViewCell.swift in Sources */,
+				E59E0CA623A97D7F00B09205 /* UIColor+.swift in Sources */,
 				E5BB1D20234AB84F00B9F9C1 /* AlertDialog.swift in Sources */,
 				E5BB1CFF234AA5DB00B9F9C1 /* MainViewController.swift in Sources */,
 				E5BB1D16234AAA6900B9F9C1 /* ResetButton.swift in Sources */,
@@ -366,7 +374,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nobuhiroharada.shotclock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -385,7 +393,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nobuhiroharada.shotclock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

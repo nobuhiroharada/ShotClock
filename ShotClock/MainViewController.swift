@@ -11,7 +11,7 @@ import AVFoundation
 
 final class MainViewController: UIViewController {
 
-    var shotClockView  = ShotClockView()
+    var shotClockView: ShotClockView = ShotClockView()
     var buzzerPlayer: AVAudioPlayer?
     
     override var prefersStatusBarHidden: Bool {
@@ -217,5 +217,4 @@ extension MainViewController: AVAudioPlayerDelegate {
         shotClockView.buzzerButton.setImage(UIImage(named: "buzzer-up"), for: .normal)
         
     }
-    
 }

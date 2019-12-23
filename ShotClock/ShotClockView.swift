@@ -83,14 +83,14 @@ final class ShotClockView: UIView {
         
         let btnPosY = frame.height*(10/12)
         
-        controlButton.center = CGPoint(x: frame.width*(1/5), y: btnPosY)
+        controlButton.center = CGPoint(x: frame.width*(2/16), y: btnPosY)
         
-        resetButton.center = CGPoint(x: frame.width*(2/5), y: btnPosY)
+        resetButton.center = CGPoint(x: frame.width*(5/16), y: btnPosY)
                 
-        sec24Button.center = CGPoint(x: frame.width*(3/5), y: btnPosY)
-        sec14Button.center = CGPoint(x: frame.width*(4/5), y: btnPosY)
+        sec24Button.center = CGPoint(x: frame.width*(8/16), y: btnPosY)
+        sec14Button.center = CGPoint(x: frame.width*(11/16), y: btnPosY)
         
-        buzzerButton.center = CGPoint(x: frame.width*(1/2), y: frame.height*(11/12))
+        buzzerButton.center = CGPoint(x: frame.width*(14/16), y: btnPosY)
         
         settingButton.center = CGPoint(x: frame.width*(11/12), y: frame.height*(1/12))
     }
@@ -105,7 +105,7 @@ final class ShotClockView: UIView {
         
         shotClockLabel.center = CGPoint(x: frame.width*(1/2), y: frame.height*(1/2))
         
-        let shotClockButtonY = frame.height*(7/8)
+        let shotClockButtonY = frame.height*(11/12)
 
         controlButton.center = CGPoint(x: frame.width*(1/6), y: shotClockButtonY)
 
@@ -150,5 +150,35 @@ final class ShotClockView: UIView {
         sec24Button.alpha = 1.0
         sec14Button.alpha = 0.3
         userdefaults.set(true, forKey: IS_SHOTCLOCK_24)
+        shotClockLabel.textColor = .yellow
+        userdefaults.setShotClockColor(.yellow, forKey: SHOT_CLOCK_COLOR)
+    }
+    
+    func getNavbarHeight() -> CGFloat {
+        
+        var height = 49.0
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            
+            if isLandscape {
+                // iPhone 8以降は高さ44、以前は30
+                if UIScreen.main.bounds.size.width > 800.0 {
+                    height = 44.0
+                } else {
+                    height = 30.0
+                }
+            } else {
+                height = 44.0
+            }
+        }
+        
+        return CGFloat(height)
+    }
+    
+    func getColorCollectionViewHeight() -> CGFloat {
+        if isLandscape {
+            return 44.0
+        } else {
+            return 92.0
+        }
     }
 }

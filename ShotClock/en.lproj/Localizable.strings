@@ -10,7 +10,7 @@
 "setting_view_title" = "Setting";
 
 // ショットクロックの色設定
-"setting_color_title" = "ShotClock color setting";
+"setting_color_title" = "ShotClock color";
 "setting_color_subtitle" = "You can change ShotClock text color";
 "setting_auto_buzzer" = "Auto buzzer";
 "setting_reset" = "Reset";
@@ -18,7 +18,7 @@
 "setting_red" = "Red";
 "setting_green" = "Green";
 "setting_yellow" = "Yellow";
-"setting_color" =  "ShotClock color set";
+"setting_shotclock_color" =  "ShotClock color";
 
 // ショットクロック オーバー
 "shotclock_over" = "Shot Clock Over";

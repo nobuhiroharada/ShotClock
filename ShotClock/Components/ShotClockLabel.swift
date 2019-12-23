@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum ShotClockTextColor: String {
+    case red, green, yellow, white, systemBlue, systemIndigo, systemOrange, systemPink, systemTeal
+}
+
 final class ShotClockLabel: UILabel {
     
     override init(frame: CGRect) {
@@ -15,12 +19,12 @@ final class ShotClockLabel: UILabel {
         
         self.text = "24"
         self.textAlignment = .center
-        self.textColor = getTextColor()
+        self.textColor = getCurrentShotClockTextColor()
         self.isUserInteractionEnabled = true
 
         switch UIDevice.current.userInterfaceIdiom {
         case .phone:
-            initPhoneAttr()
+            checkOrientation4Phone()
         case .pad:
             checkOrientation4Pad()
         default:
@@ -33,6 +37,14 @@ final class ShotClockLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func checkOrientation4Phone() {
+        if isLandscape {
+            initPhoneAttrLandscape()
+        } else {
+            initPhoneAttrPortrait()
+        }
+    }
+    
     func checkOrientation4Pad() {
         
         if isLandscape {
@@ -43,9 +55,14 @@ final class ShotClockLabel: UILabel {
 
     }
     
-    func initPhoneAttr() {
-        self.bounds = CGRect(x: 0, y: 0, width: 280, height: 200)
-        self.font = UIFont(name: "DigitalDismay", size: 240)
+    func initPhoneAttrPortrait() {
+        self.bounds = CGRect(x: 0, y: 0, width: 360, height: 280)
+        self.font = UIFont(name: "DigitalDismay", size: 340)
+    }
+    
+    func initPhoneAttrLandscape() {
+        self.bounds = CGRect(x: 0, y: 0, width: 400, height: 300)
+        self.font = UIFont(name: "DigitalDismay", size: 380)
     }
     
     func initPadAttrPortrait() {
@@ -58,8 +75,8 @@ final class ShotClockLabel: UILabel {
         self.font = UIFont(name: "DigitalDismay", size: 750)
     }
     
-    func getTextColor() -> UIColor {
-        let currentColor: ShotClockTextColor = userdefaults.getShotClockColor(forKey: SHOT_CLOCK_CHAR_CLOLR) ?? ShotClockTextColor.yellow
+    func getCurrentShotClockTextColor() -> UIColor {
+        let currentColor: ShotClockTextColor = userdefaults.getShotClockColor(forKey: SHOT_CLOCK_COLOR) ?? ShotClockTextColor.yellow
         
         switch currentColor {
         case .red:
@@ -68,20 +85,19 @@ final class ShotClockLabel: UILabel {
             return UIColor.green
         case .yellow:
             return UIColor.yellow
+        case .white:
+            return UIColor.white
+        case .systemBlue:
+            return UIColor.systemBlue
+        case .systemIndigo:
+            return UIColor.systemIndigo
+        case .systemOrange:
+            return UIColor.systemOrange
+        case .systemPink:
+            return UIColor.systemPink
+        case .systemTeal:
+            return UIColor.systemTeal
         }
     }
-    
-    func getTextColorString() -> String {
-        let currentColor: ShotClockTextColor = userdefaults.getShotClockColor(forKey: SHOT_CLOCK_CHAR_CLOLR) ?? ShotClockTextColor.yellow
-        
-        switch currentColor {
-        case .red:
-            return "setting_red".localized
-        case .green:
-            return "setting_green".localized
-        case .yellow:
-            return "setting_yellow".localized
-        }
-    }
-    
+
 }

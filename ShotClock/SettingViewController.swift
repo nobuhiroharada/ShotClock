@@ -10,29 +10,37 @@ import UIKit
  
 final class SettingViewController: UIViewController {
     
-    private let tableSections: Array = [" ", " ", " ", " "]
+    private let tableSections: Array = [" ", " ", " "]
     private let tableRowTitles: Array = [
         ["setting_auto_buzzer".localized],
-        ["setting_color".localized],
         ["setting_reset".localized],
         ["app_version".localized]
     ]
     private let tableCellId: String = "Cell"
+    private let colorCollectionCellId: String = "ColorCollectionCell"
     
     private var tableView: UITableView!
-    public var shotClockView: ShotClockView = ShotClockView()
+    
+    private let colorArray: [UIColor] = [
+        .yellow, .red, .green, .white, .systemBlue, .systemIndigo, .systemOrange, .systemPink, .systemTeal
+    ]
+    private var colorCollectionView: UICollectionView!
+    private var colorCollectionHeaderView: UIView!
+    private var colorCollectionViewTitle: UILabel!
+    
+    public var shotClockView: ShotClockView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = .black
         
-        let width = self.view.frame.width
-        let height = self.view.frame.height
+        let viewWidth = self.view.frame.width
+        let viewHeight = self.view.frame.height
         
-        let navbarHeight: CGFloat = self.getNavbarHeight()
+        let navbarHeight: CGFloat = shotClockView.getNavbarHeight()
 
-        let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: width, height: navbarHeight))
+        let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: viewWidth, height: navbarHeight))
         
         let navItem = UINavigationItem(title: "setting_view_title".localized)
         
@@ -45,18 +53,53 @@ final class SettingViewController: UIViewController {
             navItem.title = ""
             navItem.leftBarButtonItem = closeBtn
         default:
-            break // do nothing
+            break
         }
-        
         
         navigationBar.setItems([navItem], animated: true)
         self.view.addSubview(navigationBar)
 
-        tableView = UITableView(frame: CGRect(x: 0, y: navbarHeight, width: width, height: height))
+        colorCollectionHeaderView = UIView(frame: CGRect(x: 0, y: navbarHeight, width: viewWidth, height: 28))
+        colorCollectionHeaderView.backgroundColor = .systemGray4
+        
+        self.view.addSubview(colorCollectionHeaderView)
+        
+        colorCollectionViewTitle = UILabel(frame: CGRect(x: 15, y: 4, width: 200, height: 21))
+        colorCollectionViewTitle.textColor = .label
+        colorCollectionViewTitle.text = "setting_shotclock_color".localized
+        colorCollectionViewTitle.font = .boldSystemFont(ofSize: 17.0)
+        
+        colorCollectionHeaderView.addSubview(colorCollectionViewTitle)
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 36, height: 36)
+        layout.sectionInset = UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 10)
+        layout.minimumInteritemSpacing = 10
+        layout.scrollDirection = .vertical
+        
+        let colorCollctionViewHeight: CGFloat = shotClockView.getColorCollectionViewHeight()
+        
+        colorCollectionView = UICollectionView(frame: CGRect(x: 0, y: navbarHeight + colorCollectionHeaderView.frame.height, width: viewWidth, height: colorCollctionViewHeight), collectionViewLayout: layout)
+        colorCollectionView.collectionViewLayout = layout
+        
+        colorCollectionView.register(ColorCollectionViewCell.self, forCellWithReuseIdentifier: colorCollectionCellId)
+
+        colorCollectionView.backgroundColor = .systemBackground
+
+        colorCollectionView.delegate = self
+        colorCollectionView.dataSource = self
+        
+        self.view.addSubview(colorCollectionView)
+        
+        tableView = UITableView(frame:
+            CGRect(x: 0,
+                   y: navbarHeight + colorCollectionHeaderView.frame.height + colorCollectionView.frame.height,
+                   width: viewWidth,
+                   height: navbarHeight + colorCollectionHeaderView.frame.height + colorCollectionView.frame.height + viewHeight))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: tableCellId)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.isScrollEnabled = false
+        tableView.isScrollEnabled = true
         
         self.view.addSubview(tableView)
         
@@ -66,17 +109,12 @@ final class SettingViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     @objc func close(_ sender: UIButton) {
@@ -87,30 +125,92 @@ final class SettingViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func getNavbarHeight() -> CGFloat {
-        
-        var height = 49.0
-        if UIDevice.current.userInterfaceIdiom == .phone {
-//            if isIphoneX && !isLandscape {
-//                height = 44.0
-//                print(123)
-//            } else {
-//                height = 30.0
-//                print(456)
-//            }
-            if isLandscape {
-                height = 30.0
-            } else {
-                height = 44.0
-            }
-            
-        }
-        
-        return CGFloat(height)
-    }
-    
 }
 
+// MARK: - ColorColletionView Delegate, Datasource
+extension SettingViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return colorArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if let cell: ColorCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: colorCollectionCellId, for: indexPath) as? ColorCollectionViewCell {
+
+            cell.contentView.layer.backgroundColor = colorArray[indexPath.row].cgColor
+            
+            if colorArray[indexPath.row] == .white {
+                cell.contentView.layer.borderWidth = 1
+                cell.contentView.layer.borderColor = UIColor.gray.cgColor
+            }
+            
+            if colorArray[indexPath.row] == shotClockView.shotClockLabel.getCurrentShotClockTextColor() {
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                cell.selectedColor()
+            }
+            
+            return cell
+        }
+        
+        return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        if let selectedCell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+            selectedCell.selectedColor()
+        }
+
+        switch indexPath.row {
+        case 0:
+            shotClockView.shotClockLabel.textColor = .yellow
+            userdefaults.setShotClockColor(.yellow, forKey: SHOT_CLOCK_COLOR)
+        case 1:
+            shotClockView.shotClockLabel.textColor = .red
+            userdefaults.setShotClockColor(.red, forKey: SHOT_CLOCK_COLOR)
+        case 2:
+            shotClockView.shotClockLabel.textColor = .green
+            userdefaults.setShotClockColor(.green, forKey: SHOT_CLOCK_COLOR)
+        case 3:
+            shotClockView.shotClockLabel.textColor = .white
+            userdefaults.setShotClockColor(.white, forKey: SHOT_CLOCK_COLOR)
+        case 4:
+            shotClockView.shotClockLabel.textColor = .systemBlue
+            userdefaults.setShotClockColor(.systemBlue, forKey: SHOT_CLOCK_COLOR)
+        case 5:
+            shotClockView.shotClockLabel.textColor = .systemIndigo
+            userdefaults.setShotClockColor(.systemIndigo, forKey: SHOT_CLOCK_COLOR)
+        case 6:
+            shotClockView.shotClockLabel.textColor = .systemOrange
+            userdefaults.setShotClockColor(.systemOrange, forKey: SHOT_CLOCK_COLOR)
+        case 7:
+            shotClockView.shotClockLabel.textColor = .systemPink
+            userdefaults.setShotClockColor(.systemPink, forKey: SHOT_CLOCK_COLOR)
+        case 8:
+            shotClockView.shotClockLabel.textColor = .systemTeal
+            userdefaults.setShotClockColor(.systemTeal, forKey: SHOT_CLOCK_COLOR)
+        default:
+            break
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let selectedCell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+            selectedCell.deselectedColor()
+        }
+    }
+}
+
+// MARK: - TableView Delegate, Datasource
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -157,29 +257,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 break
             }
         case 1: // セクション2
-            switch indexPath.row { // ショットクロック色設定
-            case 0:
-                if cell.detailTextLabel == nil {
-                    cell = UITableViewCell(style: .value1, reuseIdentifier: tableCellId)
-                }
-                cell.textLabel?.text = tableRowTitles[indexPath.section][indexPath.row]
-                if UIDevice.current.userInterfaceIdiom == .phone {
-                    cell.detailTextLabel?.text = shotClockView.shotClockLabel.getTextColorString()
-                    cell.accessoryType = .disclosureIndicator
-                } else {
-                    let colorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
-                    colorLabel.center = CGPoint(x: self.view.frame.width - 50, y: cell.frame.height/2)
-                    colorLabel.textAlignment = .center
-                    colorLabel.text = shotClockView.shotClockLabel.getTextColorString()
-                    colorLabel.textColor = .systemGray
-                    cell.contentView.addSubview(colorLabel)
-                }
-                
-                return cell
-            default:
-                break
-            }
-        case 2: // セクション3
             switch indexPath.row { // リセット
             case 0:
                 cell.textLabel?.text = tableRowTitles[indexPath.section][indexPath.row]
@@ -188,7 +265,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             default:
                 break
             }
-        case 3: // セクション4
+        case 2: // セクション3
             switch indexPath.row { // バージョン
             case 0:
                 if cell.detailTextLabel == nil {
@@ -221,19 +298,13 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if indexPath.section == 1  && indexPath.row == 0 { // ショットクロックの色設定
-            let indexPosition = IndexPath(row: 0, section: 1)
-            AlertDialog.showColorSettingActionSheet(shotClockView, tableView, indexPosition, viewController: self)
-        }
-        else if indexPath.section == 2 && indexPath.row == 0 { // リセット
+        if indexPath.section == 1 && indexPath.row == 0 { // リセット
             self.shotClockView.reset()
             self.dismiss(animated: true, completion: nil)
         }
     }
 
     @objc func switchAutoBuzzer(_ sender : UISwitch!){
-
         if sender.isOn {
             userdefaults.set(true, forKey: BUZEER_AUTO_BEEP)
         } else {

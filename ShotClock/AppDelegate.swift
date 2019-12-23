@@ -11,7 +11,7 @@ import UIKit
 let userdefaults = UserDefaults.standard
 let BUZEER_AUTO_BEEP: String = "buzzer_auto_beep"
 let IS_SHOTCLOCK_24: String = "is_shotclock_24"
-let SHOT_CLOCK_CHAR_CLOLR: String = "shot_clock_char_color"
+let SHOT_CLOCK_COLOR: String = "shot_clock_color"
 
 var isLandscape: Bool {
     return UIApplication.shared.windows
@@ -19,23 +19,6 @@ var isLandscape: Bool {
         .windowScene?
         .interfaceOrientation
         .isLandscape ?? false
-}
-
-let isIphoneX: Bool = {
-    // iPhoneXはiOS11からなのでそれ以外の端末は除外します
-    guard #available(iOS 11.0, *),
-        UIDevice.current.userInterfaceIdiom == .phone else {
-            return false
-    }
-    let nativeSize = UIScreen.main.nativeBounds.size
-    let (w, h) = (nativeSize.width, nativeSize.height)
-    let (d1, d2): (CGFloat, CGFloat) = (1125.0, 2436.0)
-
-    return (w == d1 && h == d2) || (w == d2 && h == d1)
-}()
-
-enum ShotClockTextColor: String {
-    case red, green, yellow
 }
 
 @UIApplicationMain
@@ -50,8 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userdefaults.set(false, forKey: BUZEER_AUTO_BEEP)
         }
         
-        if (userdefaults.string(forKey: SHOT_CLOCK_CHAR_CLOLR) == nil) {
-            userdefaults.setShotClockColor(.yellow, forKey: SHOT_CLOCK_CHAR_CLOLR)
+        if (userdefaults.string(forKey: SHOT_CLOCK_COLOR) == nil) {
+            userdefaults.setShotClockColor(.yellow, forKey: SHOT_CLOCK_COLOR)
         }
         
         userdefaults.set(true, forKey: IS_SHOTCLOCK_24)
