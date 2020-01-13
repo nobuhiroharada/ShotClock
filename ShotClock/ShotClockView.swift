@@ -25,6 +25,7 @@ final class ShotClockView: UIView {
     var sec14Button: ShotClockSmallButton
     
     var buzzerButton: BuzzerButton
+    var autoBuzzerLabel: AutoBuzzerLabel
     
     var settingButton: SettingButton
     
@@ -43,6 +44,7 @@ final class ShotClockView: UIView {
         sec14Button.setTitle("14", for: .normal)
         
         buzzerButton = BuzzerButton()
+        autoBuzzerLabel = AutoBuzzerLabel()
         
         settingButton = SettingButton()
         
@@ -54,6 +56,7 @@ final class ShotClockView: UIView {
         self.addSubview(sec24Button)
         self.addSubview(sec14Button)
         self.addSubview(buzzerButton)
+        self.addSubview(autoBuzzerLabel)
         self.addSubview(settingButton)
         
         checkShotClockStatus()
@@ -91,8 +94,9 @@ final class ShotClockView: UIView {
         sec14Button.center = CGPoint(x: frame.width*(11/16), y: btnPosY)
         
         buzzerButton.center = CGPoint(x: frame.width*(14/16), y: btnPosY)
+        autoBuzzerLabel.center = CGPoint(x: frame.width*(14/16), y: btnPosY-36)
         
-        settingButton.center = CGPoint(x: frame.width*(11/12), y: frame.height*(1/12))
+        settingButton.center = CGPoint(x: frame.width*(1/12), y: frame.height*(1/12))
     }
     
     func landscape(frame: CGRect) {
@@ -115,8 +119,9 @@ final class ShotClockView: UIView {
         sec14Button.center = CGPoint(x: frame.width*(4/6), y: shotClockButtonY)
         
         buzzerButton.center = CGPoint(x: frame.width*(5/6), y: shotClockButtonY)
+        autoBuzzerLabel.center = CGPoint(x: frame.width*(5/6), y: shotClockButtonY-36)
         
-        settingButton.center = CGPoint(x: frame.width*(11/12), y: frame.height*(1/12))
+        settingButton.center = CGPoint(x: frame.width*(1/12), y: frame.height*(1/12))
     }
     
     func initPadAttrPortrait() {
@@ -178,7 +183,35 @@ final class ShotClockView: UIView {
         if isLandscape {
             return 44.0
         } else {
-            return 92.0
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                return 44.0
+            } else {
+                return 92.0
+            }
+        }
+    }
+    
+    func getColorCollectionViewTitlePosX() -> CGFloat {
+         if isLandscape {
+             if UIDevice.current.userInterfaceIdiom == .pad {
+                 return 15.0
+             } else {
+                 return 60.0
+             }
+         } else {
+             return 15.0
+         }
+     }
+     
+     func getColorCollectionViewPosX() -> CGFloat {
+        if isLandscape {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                return 0
+            } else {
+                return 60.0
+            }
+        } else {
+            return 0
         }
     }
 }

@@ -190,7 +190,10 @@ final class MainViewController: UIViewController {
     @objc func settingButton_tapped() {
         let settingViewController = SettingViewController()
         settingViewController.shotClockView = self.shotClockView
-        self.present(settingViewController, animated: true, completion: nil)
+        
+        let navigationController = UINavigationController(rootViewController: settingViewController)
+        let currentViewController = self.topViewController()
+        currentViewController?.present(navigationController, animated: true, completion: nil)
     }
     
     func openShotClockTimeOverDialog() {

@@ -30,6 +30,8 @@ final class SettingViewController: UIViewController {
     
     public var shotClockView: ShotClockView!
     
+    private var scrollView: UIScrollView = UIScrollView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,36 +40,30 @@ final class SettingViewController: UIViewController {
         let viewWidth = self.view.frame.width
         let viewHeight = self.view.frame.height
         
-        let navbarHeight: CGFloat = shotClockView.getNavbarHeight()
+        let closeBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.close, target: self, action: #selector(close(_:)))
+        
+        self.navigationItem.title = "setting_view_title".localized
+        self.navigationItem.leftBarButtonItem = closeBtn
+        
+        let barHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        
+        scrollView.frame = CGRect(x: 0, y: barHeight, width: viewWidth, height: viewHeight)
+        scrollView.contentSize = CGSize(width: viewWidth, height: viewHeight*1.2)
+        scrollView.backgroundColor = .systemBackground
+        scrollView.isScrollEnabled = true
+        self.view.addSubview(scrollView)
 
-        let navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: viewWidth, height: navbarHeight))
-        
-        let navItem = UINavigationItem(title: "setting_view_title".localized)
-        
-        let closeBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.close, target: nil, action: #selector(close(_:)))
-        
-        switch UIDevice.current.userInterfaceIdiom {
-        case .phone:
-            navItem.rightBarButtonItem = closeBtn
-        case .pad:
-            navItem.title = ""
-            navItem.leftBarButtonItem = closeBtn
-        default:
-            break
-        }
-        
-        navigationBar.setItems([navItem], animated: true)
-        self.view.addSubview(navigationBar)
-
-        colorCollectionHeaderView = UIView(frame: CGRect(x: 0, y: navbarHeight, width: viewWidth, height: 28))
+        colorCollectionHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: 28))
         colorCollectionHeaderView.backgroundColor = .systemGray4
         
-        self.view.addSubview(colorCollectionHeaderView)
+        self.scrollView.addSubview(colorCollectionHeaderView)
         
-        colorCollectionViewTitle = UILabel(frame: CGRect(x: 15, y: 4, width: 200, height: 21))
+        let colorCollectionViewTitlePosX: CGFloat = shotClockView.getColorCollectionViewTitlePosX()
+        
+        colorCollectionViewTitle = UILabel(frame: CGRect(x: colorCollectionViewTitlePosX, y: 4, width: 200, height: 21))
         colorCollectionViewTitle.textColor = .label
         colorCollectionViewTitle.text = "setting_shotclock_color".localized
-        colorCollectionViewTitle.font = .boldSystemFont(ofSize: 17.0)
+        colorCollectionViewTitle.font = .systemFont(ofSize: 14.0)
         
         colorCollectionHeaderView.addSubview(colorCollectionViewTitle)
         
@@ -79,7 +75,9 @@ final class SettingViewController: UIViewController {
         
         let colorCollctionViewHeight: CGFloat = shotClockView.getColorCollectionViewHeight()
         
-        colorCollectionView = UICollectionView(frame: CGRect(x: 0, y: navbarHeight + colorCollectionHeaderView.frame.height, width: viewWidth, height: colorCollctionViewHeight), collectionViewLayout: layout)
+        let colorCollectionViewPosX: CGFloat = shotClockView.getColorCollectionViewPosX()
+        
+        colorCollectionView = UICollectionView(frame: CGRect(x: colorCollectionViewPosX, y:  colorCollectionHeaderView.frame.height, width: viewWidth, height: colorCollctionViewHeight), collectionViewLayout: layout)
         colorCollectionView.collectionViewLayout = layout
         
         colorCollectionView.register(ColorCollectionViewCell.self, forCellWithReuseIdentifier: colorCollectionCellId)
@@ -89,19 +87,19 @@ final class SettingViewController: UIViewController {
         colorCollectionView.delegate = self
         colorCollectionView.dataSource = self
         
-        self.view.addSubview(colorCollectionView)
+        self.scrollView.addSubview(colorCollectionView)
         
         tableView = UITableView(frame:
             CGRect(x: 0,
-                   y: navbarHeight + colorCollectionHeaderView.frame.height + colorCollectionView.frame.height,
+                   y: colorCollectionHeaderView.frame.height + colorCollectionView.frame.height,
                    width: viewWidth,
-                   height: navbarHeight + colorCollectionHeaderView.frame.height + colorCollectionView.frame.height + viewHeight))
+                   height: colorCollectionHeaderView.frame.height + colorCollectionView.frame.height + viewHeight))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: tableCellId)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.isScrollEnabled = true
         
-        self.view.addSubview(tableView)
+        self.scrollView.addSubview(tableView)
         
         NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
@@ -118,7 +116,7 @@ final class SettingViewController: UIViewController {
     }
     
     @objc func close(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @objc func orientationDidChange(_ notification: NSNotification) {
@@ -307,8 +305,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     @objc func switchAutoBuzzer(_ sender : UISwitch!){
         if sender.isOn {
             userdefaults.set(true, forKey: BUZEER_AUTO_BEEP)
+            shotClockView.autoBuzzerLabel.textColor = .white
         } else {
             userdefaults.set(false, forKey: BUZEER_AUTO_BEEP)
+            shotClockView.autoBuzzerLabel.textColor = .black
         }
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E525E29F23C448B900C214C4 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525E29E23C448B900C214C4 /* UIViewController+.swift */; };
+		E525E2A123C4500F00C214C4 /* AutoBuzzerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525E2A023C4500F00C214C4 /* AutoBuzzerLabel.swift */; };
 		E56A46A823565AA500B127E2 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A46A723565AA500B127E2 /* SettingViewController.swift */; };
 		E56A46AA235A42C200B127E2 /* SettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A46A9235A42C200B127E2 /* SettingButton.swift */; };
 		E56A46AE235AC8C000B127E2 /* Userdefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A46AD235AC8C000B127E2 /* Userdefaults+.swift */; };
@@ -31,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E525E29E23C448B900C214C4 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		E525E2A023C4500F00C214C4 /* AutoBuzzerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoBuzzerLabel.swift; sourceTree = "<group>"; };
 		E56A46A723565AA500B127E2 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		E56A46A9235A42C200B127E2 /* SettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButton.swift; sourceTree = "<group>"; };
 		E56A46AD235AC8C000B127E2 /* Userdefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Userdefaults+.swift"; sourceTree = "<group>"; };
@@ -107,6 +111,7 @@
 		E5BB1D10234AA9D600B9F9C1 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E525E2A023C4500F00C214C4 /* AutoBuzzerLabel.swift */,
 				E5BB1D11234AAA0700B9F9C1 /* ShotClockLabel.swift */,
 				E5BB1D13234AAA3B00B9F9C1 /* ControlButton.swift */,
 				E5BB1D15234AAA6900B9F9C1 /* ResetButton.swift */,
@@ -126,6 +131,7 @@
 				E5BB1D24234AB92E00B9F9C1 /* String+.swift */,
 				E56A46AD235AC8C000B127E2 /* Userdefaults+.swift */,
 				E59E0CA523A97D7F00B09205 /* UIColor+.swift */,
+				E525E29E23C448B900C214C4 /* UIViewController+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -213,11 +219,13 @@
 				E56A46AA235A42C200B127E2 /* SettingButton.swift in Sources */,
 				E5BB1D1A234AAB6500B9F9C1 /* BuzzerButton.swift in Sources */,
 				E5BB1D18234AAA9500B9F9C1 /* ShotClockSmallButton.swift in Sources */,
+				E525E29F23C448B900C214C4 /* UIViewController+.swift in Sources */,
 				E56A46AE235AC8C000B127E2 /* Userdefaults+.swift in Sources */,
 				E5BB1D14234AAA3B00B9F9C1 /* ControlButton.swift in Sources */,
 				E5BB1D25234AB92E00B9F9C1 /* String+.swift in Sources */,
 				E5BB1D23234AB8DC00B9F9C1 /* UIImage+.swift in Sources */,
 				E5BB1CFB234AA5DB00B9F9C1 /* AppDelegate.swift in Sources */,
+				E525E2A123C4500F00C214C4 /* AutoBuzzerLabel.swift in Sources */,
 				E5BB1D0F234AA97100B9F9C1 /* ShotClockView.swift in Sources */,
 				E56A46A823565AA500B127E2 /* SettingViewController.swift in Sources */,
 			);
@@ -374,7 +382,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nobuhiroharada.shotclock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -393,7 +401,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nobuhiroharada.shotclock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
