@@ -12,6 +12,7 @@ let userdefaults = UserDefaults.standard
 let BUZEER_AUTO_BEEP: String = "buzzer_auto_beep"
 let IS_SHOTCLOCK_24: String = "is_shotclock_24"
 let SHOT_CLOCK_COLOR: String = "shot_clock_color"
+let CUSTOM_SHOT_SEC: String = "custom_shot_sec"
 
 var isLandscape: Bool {
     return UIApplication.shared.windows
@@ -36,7 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (userdefaults.string(forKey: SHOT_CLOCK_COLOR) == nil) {
             userdefaults.setShotClockColor(.yellow, forKey: SHOT_CLOCK_COLOR)
         }
-        
+
+        if (userdefaults.integer(forKey: CUSTOM_SHOT_SEC) == 0) {
+            userdefaults.set(14, forKey: CUSTOM_SHOT_SEC)
+        }
+
         userdefaults.set(true, forKey: IS_SHOTCLOCK_24)
         
         window = UIWindow(frame: UIScreen.main.bounds)

@@ -56,4 +56,43 @@ final class AlertDialog: UIAlertController {
         
         return action
     }
+    
+    class func showCustomShotClockEdit(title: String, shotClockView: ShotClockView, viewController: UIViewController) {
+        
+        let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
+            if let textFields = alert.textFields {
+                
+                for textField in textFields {
+                    if textField.text != "" {
+                        shotClockView.shotClockLabel.text = textField.text
+                        shotClockView.secCustomButton.setTitle(textField.text, for: .normal)
+                        let newShotSeconds = Int(textField.text!)!
+                        shotClockView.shotSeconds = newShotSeconds
+                        userdefaults.set(newShotSeconds, forKey: CUSTOM_SHOT_SEC)
+                    }
+                }
+                
+                userdefaults.set(false, forKey: IS_SHOTCLOCK_24)
+
+                if type(of: viewController) == SettingViewController.self {
+                    viewController.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
+        
+        alert.addAction(okAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        alert.addTextField(configurationHandler: {(textField: UITextField!) -> Void in
+            textField.placeholder = String(0)
+            textField.text = String(userdefaults.integer(forKey: CUSTOM_SHOT_SEC))
+            textField.keyboardType = UIKeyboardType.numberPad
+        })
+
+        viewController.present(alert, animated: true, completion: nil)
+    }
+
 }

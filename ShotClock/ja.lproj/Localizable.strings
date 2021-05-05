@@ -13,6 +13,8 @@
 "setting_color_title" = "ショットクロックの色設定";
 "setting_color_subtitle" = "ショットクロックの色を変更できます";
 "setting_auto_buzzer" = "自動ブザー設定";
+"setting_custom_clock" = "カスタムクロック設定";
+"setting_custom_second" = "秒";
 "setting_reset" = "リセット";
 "setting_cancel" = "キャンセル";
 "setting_red" = "赤";

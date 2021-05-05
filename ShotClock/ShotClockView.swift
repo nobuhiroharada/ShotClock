@@ -11,6 +11,7 @@ final class ShotClockView: UIView {
     
     var shotClockTimer: Timer!
     var shotSeconds: Int = 24
+    var customShotSeconds: Int
     var shotClockStatus: ShotClockStatus = .START
     enum ShotClockStatus: String {
         case START
@@ -22,7 +23,7 @@ final class ShotClockView: UIView {
     var controlButton: ControlButton
     var resetButton: ResetButton
     var sec24Button: ShotClockSmallButton
-    var sec14Button: ShotClockSmallButton
+    var secCustomButton: ShotClockSmallButton
     
     var buzzerButton: BuzzerButton
     var autoBuzzerLabel: AutoBuzzerLabel
@@ -40,8 +41,9 @@ final class ShotClockView: UIView {
         sec24Button = ShotClockSmallButton()
         sec24Button.setTitle("24", for: .normal)
         
-        sec14Button = ShotClockSmallButton()
-        sec14Button.setTitle("14", for: .normal)
+        secCustomButton = ShotClockSmallButton()
+        customShotSeconds = userdefaults.integer(forKey: CUSTOM_SHOT_SEC)
+        secCustomButton.setTitle(String(customShotSeconds), for: .normal)
         
         buzzerButton = BuzzerButton()
         autoBuzzerLabel = AutoBuzzerLabel()
@@ -54,7 +56,7 @@ final class ShotClockView: UIView {
         self.addSubview(controlButton)
         self.addSubview(resetButton)
         self.addSubview(sec24Button)
-        self.addSubview(sec14Button)
+        self.addSubview(secCustomButton)
         self.addSubview(buzzerButton)
         self.addSubview(autoBuzzerLabel)
         self.addSubview(settingButton)
@@ -91,7 +93,7 @@ final class ShotClockView: UIView {
         resetButton.center = CGPoint(x: frame.width*(5/16), y: btnPosY)
                 
         sec24Button.center = CGPoint(x: frame.width*(8/16), y: btnPosY)
-        sec14Button.center = CGPoint(x: frame.width*(11/16), y: btnPosY)
+        secCustomButton.center = CGPoint(x: frame.width*(11/16), y: btnPosY)
         
         buzzerButton.center = CGPoint(x: frame.width*(14/16), y: btnPosY)
         autoBuzzerLabel.center = CGPoint(x: frame.width*(14/16), y: btnPosY-36)
@@ -116,7 +118,7 @@ final class ShotClockView: UIView {
         resetButton.center = CGPoint(x: frame.width*(2/6), y: shotClockButtonY)
 
         sec24Button.center = CGPoint(x: frame.width*(3/6), y: shotClockButtonY)
-        sec14Button.center = CGPoint(x: frame.width*(4/6), y: shotClockButtonY)
+        secCustomButton.center = CGPoint(x: frame.width*(4/6), y: shotClockButtonY)
         
         buzzerButton.center = CGPoint(x: frame.width*(5/6), y: shotClockButtonY)
         autoBuzzerLabel.center = CGPoint(x: frame.width*(5/6), y: shotClockButtonY-36)
@@ -135,10 +137,10 @@ final class ShotClockView: UIView {
     func checkShotClockStatus() {
         if userdefaults.bool(forKey: IS_SHOTCLOCK_24) {
             sec24Button.alpha = 1.0
-            sec14Button.alpha = 0.3
+            secCustomButton.alpha = 0.3
         } else {
             sec24Button.alpha = 0.3
-            sec14Button.alpha = 1.0
+            secCustomButton.alpha = 1.0
         }
     }
     
@@ -153,7 +155,10 @@ final class ShotClockView: UIView {
         resetButton.isEnabled = false
         shotClockStatus = .START
         sec24Button.alpha = 1.0
-        sec14Button.alpha = 0.3
+        secCustomButton.alpha = 0.3
+        secCustomButton.setTitle("14", for: .normal)
+        userdefaults.set(14, forKey: CUSTOM_SHOT_SEC)
+
         userdefaults.set(true, forKey: IS_SHOTCLOCK_24)
         shotClockLabel.textColor = .yellow
         userdefaults.setShotClockColor(.yellow, forKey: SHOT_CLOCK_COLOR)

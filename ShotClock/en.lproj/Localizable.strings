@@ -14,6 +14,8 @@
 "setting_color_subtitle" = "You can change ShotClock text color";
 "setting_auto_buzzer" = "Auto buzzer";
 "setting_reset" = "Reset";
+"setting_custom_clock" = "Edit custom clock";
+"setting_custom_second" = "sec";
 "setting_cancel" = "Cancel";
 "setting_red" = "Red";
 "setting_green" = "Green";

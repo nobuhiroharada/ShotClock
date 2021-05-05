@@ -60,7 +60,7 @@ final class MainViewController: UIViewController {
     func addButtonAction() {
         shotClockView.sec24Button.addTarget(self, action: #selector(MainViewController.sec24Button_tapped), for: .touchUpInside)
         
-        shotClockView.sec14Button.addTarget(self, action: #selector(MainViewController.sec14Button_tapped), for: .touchUpInside)
+        shotClockView.secCustomButton.addTarget(self, action: #selector(MainViewController.sec14Button_tapped), for: .touchUpInside)
         
         shotClockView.buzzerButton.addTarget(self, action: #selector(MainViewController.buzzerButton_touchDown), for: .touchDown)
         
@@ -87,8 +87,9 @@ final class MainViewController: UIViewController {
     }
 
     @objc func sec14Button_tapped(_ sender: UIButton) {
-        shotClockView.shotSeconds = 14
-        shotClockView.shotClockLabel.text = "14"
+        let tmpShotSeconds: Int = userdefaults.integer(forKey: CUSTOM_SHOT_SEC)
+        shotClockView.shotSeconds = tmpShotSeconds
+        shotClockView.shotClockLabel.text = String(tmpShotSeconds)
         userdefaults.set(false, forKey: IS_SHOTCLOCK_24)
         shotClockView.checkShotClockStatus()
     }
@@ -147,7 +148,7 @@ final class MainViewController: UIViewController {
             if userdefaults.bool(forKey: IS_SHOTCLOCK_24) {
                 shotClockView.shotSeconds = 24
             } else {
-                shotClockView.shotSeconds = 14
+                shotClockView.shotSeconds = Int(userdefaults.integer(forKey: CUSTOM_SHOT_SEC))
             }
             
             shotClockView.shotClockLabel.text = String(shotClockView.shotSeconds)
@@ -157,7 +158,7 @@ final class MainViewController: UIViewController {
             if userdefaults.bool(forKey: IS_SHOTCLOCK_24) {
                 shotClockView.shotSeconds = 24
             } else {
-                shotClockView.shotSeconds = 14
+                shotClockView.shotSeconds = Int(userdefaults.integer(forKey: CUSTOM_SHOT_SEC))
             }
             
             shotClockView.shotClockLabel.text = String(shotClockView.shotSeconds)
@@ -180,8 +181,11 @@ final class MainViewController: UIViewController {
     }
     
     @objc func shotClockLabel_tapped() {
+        print(shotClockView.shotClockStatus)
         if shotClockView.shotClockStatus == .STOP {
             shotClockView.shotClockTimer.invalidate()
+            shotClockView.controlButton.setImage(UIImage(named: "start.png"), for: .normal)
+            shotClockView.shotClockStatus = .START
         }
 
         AlertDialog.showShotClockEdit(title: "shotclock_title".localized, shotClockView: shotClockView, viewController: self)
@@ -202,7 +206,7 @@ final class MainViewController: UIViewController {
             if userdefaults.bool(forKey: IS_SHOTCLOCK_24) {
                 self.shotClockView.shotSeconds = 24
             } else {
-                self.shotClockView.shotSeconds = 14
+                self.shotClockView.shotSeconds = Int(userdefaults.integer(forKey: CUSTOM_SHOT_SEC))
             }
             
             self.shotClockView.shotClockLabel.text = String(self.shotClockView.shotSeconds)

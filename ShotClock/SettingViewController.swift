@@ -10,9 +10,10 @@ import UIKit
  
 final class SettingViewController: UIViewController {
     
-    private let tableSections: Array = [" ", " ", " "]
+    private let tableSections: Array = [" ", " ", " ", " "]
     private let tableRowTitles: Array = [
         ["setting_auto_buzzer".localized],
+        ["setting_custom_clock".localized],
         ["setting_reset".localized],
         ["app_version".localized]
     ]
@@ -255,6 +256,31 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 break
             }
         case 1: // セクション2
+            switch indexPath.row { // カスタムショットクロック
+            case 0:
+                if cell.detailTextLabel == nil {
+                    cell = UITableViewCell(style: .value1, reuseIdentifier: tableCellId)
+                }
+
+                cell.textLabel?.text = tableRowTitles[indexPath.section][indexPath.row]
+                cell.textLabel?.textColor = .none
+                
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    cell.detailTextLabel?.text = String(userdefaults.integer(forKey: CUSTOM_SHOT_SEC)) + " " + "setting_custom_second".localized
+                } else {
+                    let customScoreLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+                    customScoreLabel.center = CGPoint(x: self.view.frame.width - 50, y: cell.frame.height/2)
+                    customScoreLabel.textAlignment = .center
+                    customScoreLabel.text = String(userdefaults.integer(forKey: CUSTOM_SHOT_SEC)) + " "  + "setting_custom_second".localized
+                    customScoreLabel.textColor = .systemGray
+                    cell.contentView.addSubview(customScoreLabel)
+                }
+
+                return cell
+            default:
+                break
+            }
+        case 2: // セクション3
             switch indexPath.row { // リセット
             case 0:
                 cell.textLabel?.text = tableRowTitles[indexPath.section][indexPath.row]
@@ -263,7 +289,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             default:
                 break
             }
-        case 2: // セクション3
+        case 3: // セクション4
             switch indexPath.row { // バージョン
             case 0:
                 if cell.detailTextLabel == nil {
@@ -296,7 +322,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 && indexPath.row == 0 { // リセット
+        if indexPath.section == 1 && indexPath.row == 0 { // カスタムクロック設定
+            AlertDialog.showCustomShotClockEdit(title: "setting_custom_clock".localized, shotClockView: shotClockView, viewController: self)
+        }
+        if indexPath.section == 2 && indexPath.row == 0 { // リセット
             self.shotClockView.reset()
             self.dismiss(animated: true, completion: nil)
         }
